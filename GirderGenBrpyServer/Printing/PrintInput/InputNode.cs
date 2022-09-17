@@ -4,7 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Printing.PrintInput
-{
+{   public class Vector3
+    {
+        public double x;
+        public double y;
+        public double z;
+    }
+
     internal class InputNode
     {
         public const string KEY = "node";

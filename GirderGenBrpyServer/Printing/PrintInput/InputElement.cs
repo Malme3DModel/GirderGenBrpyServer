@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,6 +16,17 @@ namespace Printing.PrintInput
         public double Iz;
         public string name;
     }
+
+    internal class InputElement
+    {
+        public const string KEY = "element";
+
+        //Dictionary<string, Dictionary<string, Dictionary<string, int>>> element = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>() {
+        //{"1",new Dictionary<string,object>(){ { "2", new Dictionary<string, int>() { { "1", 2 } } } } },
+        //};
+
+
+
 
     //internal class InputElement
     //{
