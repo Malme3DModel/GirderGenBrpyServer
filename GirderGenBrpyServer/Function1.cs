@@ -23,10 +23,10 @@ namespace GirderGenBrpyServer
             string responseMessage = "í êMíÜ";
             try
             {
-                var body = new Dictionary<string, object>()
-                {
 
-                    ["node"] = "",
+                var param = new Dictionary<string, object>()
+                {
+                    ["name"] = "ÇÿÇÒÇΩ",
                     ["note"] = "ëÂç„ï{èoêg",
                     ["age"] = 30,
                     ["registerDate"] = "2021-12-01",
