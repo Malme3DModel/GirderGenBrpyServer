@@ -23,7 +23,6 @@ namespace GirderGenBrpyServer
             string responseMessage = "’ÊM’†";
             try
             {
-
                 var param = new Dictionary<string, object>()
                 {
                     ["name"] = "‚Ø‚ñ‚½",
@@ -49,5 +48,7 @@ namespace GirderGenBrpyServer
             }
             return new OkObjectResult(responseMessage);
         }
+    
+    
     }
 }

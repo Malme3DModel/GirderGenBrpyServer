@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\GirderGenBrpyServer",
+    "\\GirderGenBrpyServer\\Calculate",
+    "\\GirderGenBrpyServer\\Printing",
+    "\\GirderGenBrpyServer\\Printing\\PrintInput",
+    "\\GirderGenBrpyServer\\Properties",
+    "\\GirderGenTest"
+  ],
+  "SelectedNode": "\\GirderGenBrpyServer\\Printing\\PrintInput\\InputElement.cs",
+  "PreviewInSolutionExplorer": false
+}

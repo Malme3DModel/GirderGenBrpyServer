@@ -8,70 +8,71 @@ using Printing.PrintInput;
 
 namespace GirderGenBrpyServer.Printing
 {
-    class PrintData
+    public class PrintData
     {
         // classをまとめてここに代入する．
-        public Dictionary<string, object> printDatas = new Dictionary<string, object>();
+        public Dictionary<string,object> printDatas = new Dictionary<string,object>();
 
-        public PrintData(Dictionary<string, object> data)
+        //public PrintData(Dictionary<string, object> data)
+        public PrintData()
         {
-            // 2次元か3次元かを記憶
-            if (data.ContainsKey("dimension"))
-                printDatas.Add("dimension", int.Parse(data["dimension"].ToString()));
-            else
-                printDatas.Add("dimension", 3);
+            //// 2次元か3次元かを記憶
+            //if (data.ContainsKey("dimension"))
+            //    printDatas.Add("dimension", int.Parse(data["dimension"].ToString()));
+            //else
+            //    printDatas.Add("dimension", 3);
 
-            // 言語を記憶
-            if (data.ContainsKey("language"))
-                printDatas.Add("language", data["language"].ToString());
-            else
-                printDatas.Add("language", "ja");
+            //// 言語を記憶
+            //if (data.ContainsKey("language"))
+            //    printDatas.Add("language", data["language"].ToString());
+            //else
+            //    printDatas.Add("language", "ja");
 
-            // ペーパサイズ
-            if (data.ContainsKey("pageSize"))
-                printDatas.Add("pageSize", data["pageSize"].ToString());
-            else
-                printDatas.Add("pageSize", "A4");
+            //// ペーパサイズ
+            //if (data.ContainsKey("pageSize"))
+            //    printDatas.Add("pageSize", data["pageSize"].ToString());
+            //else
+            //    printDatas.Add("pageSize", "A4");
 
-            // ペーパ向き
-            if (data.ContainsKey("pageOrientation"))
-                printDatas.Add("pageOrientation", data["pageOrientation"].ToString());
-            else
-                printDatas.Add("pageOrientation", "Vertical"); // or Horizontal
+            //// ペーパ向き
+            //if (data.ContainsKey("pageOrientation"))
+            //    printDatas.Add("pageOrientation", data["pageOrientation"].ToString());
+            //else
+            //    printDatas.Add("pageOrientation", "Vertical"); // or Horizontal
 
-            // タイトル
-            if (data.ContainsKey("title"))
-                printDatas.Add("title", data["title"].ToString());
-            else
-                printDatas.Add("title", null);
+            //// タイトル
+            //if (data.ContainsKey("title"))
+            //    printDatas.Add("title", data["title"].ToString());
+            //else
+            //    printDatas.Add("title", null);
 
             // node
-            printDatas.Add(InputNode.KEY, new InputNode(data));
+            printDatas.Add(InputNode.KEY,new InputNode().nodes);
             // element
-            printDatas.Add(InputElement.KEY, new InputElement(data));
+            printDatas.Add(InputElement.KEY,new InputElement().element);
             // member
-            printDatas.Add(InputMember.KEY, new InputMember(data));
-            // fixnode
-            printDatas.Add(InputFixNode.KEY, new InputFixNode(data));
-            // joint
-            printDatas.Add(InputJoint.KEY, new InputJoint(data));
-            // notice_points
-            printDatas.Add(InputNoticePoints.KEY, new InputNoticePoints(data));
-            // fixmember
-            printDatas.Add(InputFixMember.KEY, new InputFixMember(data));
-            // shell
-            printDatas.Add(InputShell.KEY, new InputShell(data));
-            // load
+            printDatas.Add(InputMember.KEY,new InputMember().member);
+            //// fixnode
+            printDatas.Add( InputFixNode.KEY,new InputFixNode().fix_node);
+            //// joint
+            //printDatas.Add(InputJoint.KEY, new InputJoint(data));
+            //// notice_points
+            //printDatas.Add(InputNoticePoints.KEY, new InputNoticePoints(data));
+            //// fixmember
+            //printDatas.Add(InputFixMember.KEY, new InputFixMember(data));
+            //// shell
+            //printDatas.Add(InputShell.KEY, new InputShell(data));
+            //// load
             //基本荷重
-            printDatas.Add(InputLoadName.KEY, new InputLoadName(data));
+            //new InputLoadName();
             //実荷重
-            printDatas.Add(InputLoad.KEY, new InputLoad(data));
-            // define
-            printDatas.Add(InputDefine.KEY, new InputDefine(data));
-            // combine 
-            printDatas.Add(InputCombine.KEY, new InputCombine(data));
-            // pickup
-            printDatas.Add(InputPickup.KEY, new InputPickup(data));
+            printDatas.Add(InputLoad.KEY,new InputLoad().load);
+            //// define
+            //printDatas.Add(InputDefine.KEY, new InputDefine(data));
+            //// combine 
+            //printDatas.Add(InputCombine.KEY, new InputCombine(data));
+            //// pickup
+            //printDatas.Add(InputPickup.KEY, new InputPickup(data));
 
             //// disg
             //this.printDatas.Add(ResultDisg.KEY, new ResultDisg(data));
