@@ -100,6 +100,9 @@ namespace GirderGenBrpyServer.Printing
             //if (data.ContainsKey(DiagramResult.KEY))
             //    this.printDatas.Add(DiagramResult.KEY, new DiagramResult(data));
 
+            //user
+            printDatas.Add(InputUser().KEY,InputUser().uid);
+
         }
     }
 }
