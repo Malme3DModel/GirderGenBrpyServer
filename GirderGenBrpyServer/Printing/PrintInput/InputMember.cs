@@ -12,12 +12,6 @@ namespace Printing.PrintInput
         public string ni; // 節点番号
         public string nj;
         public string e;  // 材料番号
-        public double cg = 0; // コードアングル
-
-        // 他のモジュールで使う変数
-        public double L = double.NaN;       // 要素の長さ
-        public double[, ] t = null;         // 座標変換マトリックス
-        public double radian = double.NaN;   // 角度
     }
 
     internal class InputMember

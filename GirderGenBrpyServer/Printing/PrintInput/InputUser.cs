@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace Printing.PrintInput
 {
-    internal class User
+    internal class InputUser
     {
         public const string KEY = "uid";
-        public string uid = "FOGUWh43Y5OQSZWgm0NtavHFev82"
+        public const string uid = "FOGUWh43Y5OQSZWgm0NtavHFev82";
     }
 }

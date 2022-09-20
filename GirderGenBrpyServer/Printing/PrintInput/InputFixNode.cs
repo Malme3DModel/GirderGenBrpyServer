@@ -35,7 +35,7 @@ namespace Printing.PrintInput
             ff.Add(f);
 
             f = new FixNode();
-            f.n = "2";
+            f.n = "3";
             f.tx = 1;
             f.ty = 1;
             f.tz = 1;

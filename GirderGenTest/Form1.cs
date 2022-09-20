@@ -1,5 +1,3 @@
-using GirderGenBrpyServer.Calculate;
-
 namespace GirderGenTest
 {
     public partial class Form1 : Form

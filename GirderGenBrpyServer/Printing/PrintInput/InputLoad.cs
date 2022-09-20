@@ -30,26 +30,14 @@ namespace Printing.PrintInput
 
     public class LoadName
     {
-        public double rate;
-        public string symbol;
-        public string name;
-        public double LL_pitch;
         public int fix_node;
         public int element;
-        public int fix_member;
-        public int joint;
         public Array load_node;
     }
 
-    //public class Load
-    //{
-    //    public LoadName[] loadNames;
-    //    public ActualLoad[] actualLoads;
-    //}
-
     internal class InputLoad
     {
-                public const string KEY = "load";
+        public const string KEY = "load";
         public Dictionary<string, object> load = new Dictionary<string, object>();
 
         public InputLoad() { 
@@ -70,10 +58,9 @@ namespace Printing.PrintInput
 
             l.fix_node = 1;
             l.element = 1;
-            l.LL_pitch = 0.1;
             //this.loadnames.Add("1",l);
 
             this.load.Add("1", l);
         }
-}
+    }
 }
