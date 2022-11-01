@@ -21,7 +21,7 @@ namespace Printing.Comon
         public XFont font_got;  // ゴシックフォント
 
         // 図形に関する情報
-        public XPen xpen;
+        public XPen xpen = new XPen(XColors.Black, 1);
 
         private PageSize pageSize;
         private PageOrientation pageOrientation;

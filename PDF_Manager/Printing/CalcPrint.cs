@@ -7,33 +7,26 @@ namespace Printing
     public class CalcPrint
     {
         private GirderData.GirderData data;
+        private PdfDocument mc;
 
         public CalcPrint(GirderData.GirderData inp)
         {
             this.data = inp;
+
+            this.mc = new PdfDocument(this.data);
+            calcBeam.printPDF(this.mc);
         }
 
         public void createPDF()
         {
-            //  PDF出力のためのclassの呼び出し
-            //  整形したデータを送る
-            // PDF ページを準備する
-            var mc = new PdfDocument(this.data);
-            calcBeam.printPDF(mc);
-
             // PDFファイルを生成する
-            mc.SavePDF();
+            this.mc.SavePDF();
         }
 
         public string getPdfSource()
         {
-            //  PDF出力のためのclassの呼び出し
-            //  整形したデータを送る
-            var mc = new PdfDocument(this.data);
-            calcBeam.printPDF(mc);
-
             // PDF を Byte型に変換
-            var b = mc.GetPDFBytes();
+            var b = this.mc.GetPDFBytes();
 
             // Byte型配列をBase64文字列に変換
             string str = Convert.ToBase64String(b);
