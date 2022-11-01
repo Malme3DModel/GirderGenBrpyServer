@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "nsocu0RpkGGc+fsBmr2h8xCf7HSeW9zTenjhxUJYzXcvOAQ/srxifB/5lc9UKBIyq0bqCD+sshUOb0cfBxB/wA==",
+  "success": true,
+  "projectFilePath": "D:\\Documents\\Project\\GirderGenBrpyServer\\PDF_Manager\\PDF_Manager.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://nuget.c1.grapecity.com/nuget'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
+}
