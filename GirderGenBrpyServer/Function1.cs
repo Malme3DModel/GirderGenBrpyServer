@@ -20,32 +20,16 @@ namespace GirderGenBrpyServer
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            string responseMessage = "通信中";
-            try
-            {
-                var param = new Dictionary<string, object>()
-                {
-                    ["name"] = "ぺんた",
-                    ["note"] = "大阪府出身",
-                    ["age"] = 30,
-                    ["registerDate"] = "2021-12-01",
-                };
-                var client = new HttpClient();
+ 
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
-                var jsonString = System.Text.Json.JsonSerializer.Serialize(param);
-                var content = new StringContent(jsonString, Encoding.UTF8, @"application/json");
-                //POST
-                var result = await client.PostAsync(@"https://asia-northeast1-the-structural-engine.cloudfunctions.net/frameWeb-2", content);
+            // データの読み込み
+            var inp = new GirderData.GirderData(requestBody);
 
-                //GET
-                var resultGet = await client.GetAsync(@"https://asia-northeast1-the-structural-engine.cloudfunctions.net/frameWeb-2");
-                responseMessage = await resultGet.Content.ReadAsStringAsync();
+            var calc = new Printing.CalcPrint(inp);
 
-            }
-            catch (Exception e)
-            {
-                responseMessage = "失敗:" + e.Message;
-            }
+            string responseMessage = calc.getPdfSource();
+
             return new OkObjectResult(responseMessage);
         }
     

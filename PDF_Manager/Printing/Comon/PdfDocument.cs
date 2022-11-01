@@ -218,11 +218,11 @@ internal class JapaneseFontResolver : IFontResolver
     public string DefaultFontName => throw new NotImplementedException();
 
     // MS 明朝
-    public static readonly string MS_MINCHO_TTF = "GirderGenBrpyServer.fonts.MS Mincho.ttf";
+    public static readonly string MS_MINCHO_TTF = "PDF_Manager.fonts.MS Mincho.ttf";
 
 
     // MS ゴシック
-    private static readonly string MS_GOTHIC_TTF = "GirderGenBrpyServer.fonts.MS Gothic.ttf";
+    private static readonly string MS_GOTHIC_TTF = "PDF_Manager.fonts.MS Gothic.ttf";
 
 
     public byte[] GetFont(string faceName)

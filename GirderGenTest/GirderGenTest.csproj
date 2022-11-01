@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GirderGenBrpyServer\GirderGenBrpyServer.csproj" />
+    <ProjectReference Include="..\PDF_Manager\PDF_Manager.csproj" />
   </ItemGroup>
 
 </Project>

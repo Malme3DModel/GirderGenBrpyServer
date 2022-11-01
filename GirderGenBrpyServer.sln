@@ -5,7 +5,9 @@ VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GirderGenBrpyServer", "GirderGenBrpyServer\GirderGenBrpyServer.csproj", "{AF13AD04-1FA5-4EC5-B195-2258210B4BA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GirderGenTest", "GirderGenTest\GirderGenTest.csproj", "{5B877174-9359-4AFE-A8CB-DCDB7FCE211F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GirderGenTest", "GirderGenTest\GirderGenTest.csproj", "{5B877174-9359-4AFE-A8CB-DCDB7FCE211F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDF_Manager", "PDF_Manager\PDF_Manager.csproj", "{B1F6196B-5BCC-49FF-AB16-AB29B614DB2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{5B877174-9359-4AFE-A8CB-DCDB7FCE211F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B877174-9359-4AFE-A8CB-DCDB7FCE211F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B877174-9359-4AFE-A8CB-DCDB7FCE211F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1F6196B-5BCC-49FF-AB16-AB29B614DB2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F6196B-5BCC-49FF-AB16-AB29B614DB2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F6196B-5BCC-49FF-AB16-AB29B614DB2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1F6196B-5BCC-49FF-AB16-AB29B614DB2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

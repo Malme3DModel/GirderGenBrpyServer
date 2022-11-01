@@ -2,3 +2,6 @@ GirderGenTest/obj/
 .vs/
 GirderGenTest/GirderGenTest.csproj.user
 GirderGenTest/bin/Debug/
+PDF_Manager/obj/
+PDF_Manager/bin/Debug/netcoreapp3.1/PDF_Manager.deps.json
+PDF_Manager/bin/
