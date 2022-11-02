@@ -14,7 +14,7 @@ namespace Printing
             this.data = inp;
 
             this.mc = new PdfDocument(this.data);
-            calcBeam.printPDF(this.mc);
+            calcBeam.printPDF(this.mc, this.data);
         }
 
         public void createPDF()
