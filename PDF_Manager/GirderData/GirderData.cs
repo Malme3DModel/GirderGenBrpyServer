@@ -38,6 +38,88 @@ namespace GirderData
             }
         }
 
+        public int amount_V
+        {
+            get
+            {
+                if (this.myData.ContainsKey("beam"))
+                {
+                    var obj = this.myData["beam"];
+                    JObject data = JObject.FromObject(obj);
+                    var beam = data.ToObject<Dictionary<string, object>>();
+                    if (beam.ContainsKey("amount_V"))
+                    {
+                        var obj2 = beam["amount_V"];
+                        return Convert.ToInt32(obj2);
+                    }
+                    
+                }
+                return 1;
+            }
+        }
+
+        public int amount_H
+        {
+            get
+            {
+                if (this.myData.ContainsKey("others"))
+                {
+                    var obj = this.myData["others"];
+                    JObject data = JObject.FromObject(obj);
+                    var beam = data.ToObject<Dictionary<string, object>>();
+                    if (beam.ContainsKey("amount_H"))
+                    {
+                        var obj2 = beam["amount_H"];
+                        return Convert.ToInt32(obj2);
+                    }
+
+                }
+                return 1;
+            }
+        }
+
+        public string crossbeam
+        {
+            get
+            {
+                if (this.myData.ContainsKey("display"))
+                {
+                    var obj = this.myData["display"];
+                    JObject data = JObject.FromObject(obj);
+                    var beam = data.ToObject<Dictionary<string, object>>();
+                    if (beam.ContainsKey("crossbeam"))
+                    {
+                        var obj2 = beam["crossbeam"];
+                        return obj2.ToString();
+                    }
+
+                }
+                return "";
+            }
+        }
+
+        public int amount_C
+        {
+            get
+            {
+                if (this.myData.ContainsKey("crossbeam"))
+                {
+                    var obj = this.myData["crossbeam"];
+                    JObject data = JObject.FromObject(obj);
+                    var beam = data.ToObject<Dictionary<string, object>>();
+                    if (beam.ContainsKey("lacation2"))
+                    {
+                        var obj2 = beam["location2"];
+                        return Convert.ToInt32(obj2);
+                    }
+
+                }
+                return 1;
+            }
+        }
+
+
+
         public string pageSize {
             get
             {
