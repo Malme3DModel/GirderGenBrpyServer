@@ -34,6 +34,18 @@ namespace Printing.Comon
         /// </summary>
         public static double LineSpacing2 = printManager.FontHeight * 1.5;
 
+        /// <summary>
+        /// インデント（1文字）
+        ///  pt ポイント
+        /// </summary>
+        public static double LineSpacing3 = printManager.FontSize;
+
+        /// <summary>
+        /// インデント（3文字）
+        ///  pt ポイント
+        /// </summary>
+        public static double LineSpacing4 = printManager.FontSize * 3.0;
+
 
 
     }

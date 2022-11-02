@@ -91,6 +91,14 @@ namespace Printing.Comon
         {
             currentPos.Y += LF;
         }
+        /// <summary>
+        /// 改行する
+        /// </summary>
+        /// <param name="LI"></param>
+        public void addCurrentX(double LI)
+        {
+            currentPos.X += LI;
+        }
         public void setCurrentX(double X)
         {
             currentPos.X = Margine.Left;
