@@ -41,7 +41,7 @@ namespace Printing.Calcrate
 
             mc.addCurrentY(printManager.LineSpacing2);
             mc.addCurrentY(printManager.LineSpacing2);
-            mc.addCurrentX(printManager.LineSpacing3　* 20.0);
+            mc.addCurrentX(printManager.LineSpacing3 * 20.0);
             Text.PrtText(mc, "主桁");
             mc.addCurrentX(-printManager.LineSpacing3 * 20.0);
             XPoint _pta1 = new XPoint(mc.currentPos.X + 203.5, mc.currentPos.Y - 5.5);
@@ -55,8 +55,10 @@ namespace Printing.Calcrate
             double startpoint = 115.5;
             double length = 302.5;
             double endpoint = length + startpoint;
-            double amount = 4;
-            double amount2 = 7;
+            int amount = data.amount_V;
+            int amount2 = data.amount_H;
+            int amount3 = data.amount_C;
+            string TFc = data.crossbeam;
             double interval = 30;
             double interval2 = length / (amount2 - 1);
             double dy = 0;
@@ -73,6 +75,8 @@ namespace Printing.Calcrate
             double dmea = 5;
             double arrowH = 3.0;
             double arrowW = 5.0;
+
+            /// 主桁の線を描写
             for (int i = 0; i < amount; i++)
             {
                 XPoint _pt1 = new XPoint(mc.currentPos.X + startpoint, mc.currentPos.Y + dy);
@@ -80,17 +84,8 @@ namespace Printing.Calcrate
                 Shape.DrawLine(mc, _pt1, _pt2);
                 dy += interval;
             }
-            dy = 0.0;
-            for (int i = 0; i < amount; i++) {
-                XPoint _pt1 = new XPoint(mc.currentPos.X + startpoint, mc.currentPos.Y + dy);
-                XPoint _pt2 = new XPoint(mc.currentPos.X + startpoint - trix, mc.currentPos.Y + dy + trisize);
-                XPoint _pt3 = new XPoint(mc.currentPos.X + startpoint + trix, mc.currentPos.Y + dy + trisize);
-                Shape.DrawLine(mc, _pt1, _pt2);
-                Shape.DrawLine(mc, _pt1, _pt3);
-                Shape.DrawLine(mc, _pt2, _pt3);
-                dy += interval;
-            }
 
+            /// 対傾構を描写
             for (int i = 0; i < amount2 - 2; i++)
             {
                 dy = 0.0;
@@ -106,16 +101,21 @@ namespace Printing.Calcrate
                 Shape.DrawLine(mc, _pt3, _pt4);
                 dx += interval2;
             }
-            XPoint _pts1 = new XPoint(mc.currentPos.X + startpoint, mc.currentPos.Y);
-            XPoint _pts2 = new XPoint(mc.currentPos.X + startpoint, mc.currentPos.Y + (amount - 1) * interval);
-            XPoint _ptm1 = new XPoint(mc.currentPos.X + startpoint + length / 2.0, mc.currentPos.Y);
-            XPoint _ptm2 = new XPoint(mc.currentPos.X + startpoint + length / 2.0, mc.currentPos.Y + (amount - 1) * interval);
-            XPoint _pte1 = new XPoint(mc.currentPos.X + endpoint, mc.currentPos.Y);
-            XPoint _pte2 = new XPoint(mc.currentPos.X + endpoint, mc.currentPos.Y + (amount - 1) * interval);
-            Shape.DrawLine(mc, _pts1, _pts2);
-            Shape.DrawLine(mc, _ptm1, _ptm2);
-            Shape.DrawLine(mc, _pte1, _pte2);
 
+            /// 左側の支承を描写
+            dy = 0.0;
+            for (int i = 0; i < amount; i++)
+            {
+                XPoint _pt1 = new XPoint(mc.currentPos.X + startpoint, mc.currentPos.Y + dy);
+                XPoint _pt2 = new XPoint(mc.currentPos.X + startpoint - trix, mc.currentPos.Y + dy + trisize);
+                XPoint _pt3 = new XPoint(mc.currentPos.X + startpoint + trix, mc.currentPos.Y + dy + trisize);
+                Shape.DrawLine(mc, _pt1, _pt2);
+                Shape.DrawLine(mc, _pt1, _pt3);
+                Shape.DrawLine(mc, _pt2, _pt3);
+                dy += interval;
+            }
+
+            /// 右側の支承を描写
             dy = 0.0;
             for (int i = 0; i < amount; i++)
             {
@@ -131,6 +131,26 @@ namespace Printing.Calcrate
                 dy += interval;
             }
 
+            /// 荷重分配横桁を描写
+            double m = (amount2 - 1) / (amount3 + 1);
+            Math.Floor(m);
+            for (int i = 0; i < amount3; i++)
+            {
+                XPoint _ptm1 = new XPoint(mc.currentPos.X + startpoint + interval2 * m, mc.currentPos.Y);
+                XPoint _ptm2 = new XPoint(mc.currentPos.X + startpoint + interval2 * m, mc.currentPos.Y + (amount - 1) * interval);
+                Shape.DrawLine(mc, _ptm1, _ptm2);
+                m += m;
+            }
+
+            /// 端横桁を描写
+            XPoint _pts1 = new XPoint(mc.currentPos.X + startpoint, mc.currentPos.Y);
+            XPoint _pts2 = new XPoint(mc.currentPos.X + startpoint, mc.currentPos.Y + (amount - 1) * interval);
+            XPoint _pte1 = new XPoint(mc.currentPos.X + endpoint, mc.currentPos.Y);
+            XPoint _pte2 = new XPoint(mc.currentPos.X + endpoint, mc.currentPos.Y + (amount - 1) * interval);
+            Shape.DrawLine(mc, _pts1, _pts2);
+            Shape.DrawLine(mc, _pte1, _pte2);
+
+            /// 右側寸法線を作成
             dx = 5.5;
             XPoint _ptL1 = new XPoint(mc.currentPos.X + endpoint + dx, mc.currentPos.Y);
             XPoint _ptL2 = new XPoint(mc.currentPos.X + endpoint + measurement3 + dx, mc.currentPos.Y);
@@ -150,23 +170,20 @@ namespace Printing.Calcrate
             Shape.DrawLine(mc, _ptL6, _ptL9);
             Shape.DrawLine(mc, _ptL6, _ptL10);
 
-
             mc.addCurrentX(printManager.LineSpacing3 * 8.0);
             Text.PrtText(mc, "G1");
             mc.addCurrentY(printManager.LineSpacing2);
             mc.addCurrentY(printManager.LineSpacing2);
             Text.PrtText(mc, "G2");
             mc.addCurrentY(printManager.LineSpacing2);
-            mc.addCurrentX(printManager.LineSpacing3 * 36.0);
-            Text.PrtText(mc, "3x2550=7650");
             mc.addCurrentY(printManager.LineSpacing2);
-            mc.addCurrentX(-printManager.LineSpacing3 * 36.0);
             Text.PrtText(mc, "G3");
             mc.addCurrentY(printManager.LineSpacing2);
             mc.addCurrentY(printManager.LineSpacing2);
             Text.PrtText(mc, "G4");
             mc.addCurrentX(-printManager.LineSpacing3 * 8.0);
 
+            /// 下側寸法線を作成
             XPoint _ptM1 = new XPoint(mc.currentPos.X + startpoint, mc.currentPos.Y);
             XPoint _ptM2 = new XPoint(mc.currentPos.X + startpoint, mc.currentPos.Y + measurement);
             XPoint _ptM3 = new XPoint(mc.currentPos.X + startpoint + (length / 2.0), mc.currentPos.Y);
@@ -210,12 +227,18 @@ namespace Printing.Calcrate
             Shape.DrawLine(mc, _ptM10, _ptM24);
 
             mc.addCurrentY(printManager.LineSpacing2);
-            mc.addCurrentX(printManager.LineSpacing3 * 29.0);
+            mc.addCurrentX(printManager.LineSpacing3 * 30.5);
             Text.PrtText(mc, "荷重分配横げた");
-            mc.addCurrentX(-printManager.LineSpacing3 * 29.0);
-            XPoint _pta3 = new XPoint(mc.currentPos.X + startpoint + (length / 2.0), mc.currentPos.Y - printManager.LineSpacing2 * 2.0);
-            XPoint _pta4 = new XPoint(mc.currentPos.X + startpoint + (length / 2.0) + 50, mc.currentPos.Y - 5.5);
-            Shape.DrawLine(mc, _pta3, _pta4);
+            mc.addCurrentX(-printManager.LineSpacing3 * 30.5);
+            XPoint _pta3 = new XPoint(mc.currentPos.X + startpoint + (length / 2.0) + 65, mc.currentPos.Y - 5.5);
+            double s = (amount2 - 1) / (amount3 + 1);
+            Math.Floor(s);
+            for (int i = 0; i < amount3; i++)
+            {
+                XPoint _pta4 = new XPoint(mc.currentPos.X + startpoint + interval2 * s, mc.currentPos.Y - printManager.LineSpacing2 * 2.0);
+                Shape.DrawLine(mc, _pta3, _pta4);
+                s += s;
+            }
             mc.addCurrentY(printManager.LineSpacing2);
             mc.addCurrentY(printManager.LineSpacing2);
             mc.addCurrentX(printManager.LineSpacing3 * 14.0);
@@ -226,6 +249,9 @@ namespace Printing.Calcrate
             mc.addCurrentX(-printManager.LineSpacing3 * 5.0);
             Text.PrtText(mc, "33000");
 
+            var _x = printManager.LineSpacing3 * 46.0;
+            var _y = printManager.LineSpacing2 * (16.0 + (amount - 3));
+            mc.printText(_x, _y, "3x2550=7650");
 
         }
     }

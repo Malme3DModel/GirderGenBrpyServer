@@ -92,7 +92,7 @@ namespace Printing.Comon
             currentPos.Y += LF;
         }
         /// <summary>
-        /// インデントをずらす
+        /// 改行する
         /// </summary>
         /// <param name="LI"></param>
         public void addCurrentX(double LI)
@@ -103,6 +103,40 @@ namespace Printing.Comon
         {
             currentPos.X = Margine.Left;
             currentPos.X += X;
+        }
+
+        private int Target;           // これから描く図が, 紙面のどの位置なのか
+
+        public int currentArea
+        {
+            get
+            {
+                return this.Target;
+            }
+            set
+            {
+                this.Target = value;
+            }
+        }
+
+        private XPoint[] _Center = new XPoint[2] { new XPoint(0, 0), new XPoint(0, 0) };  // 描く図の紙面における中心位置
+        public void printText(double _x1, double _y1, string str, double angle = 90, XFont font = null)
+        {
+
+            var centerPos = this._Center[this.currentArea];
+
+            var x1 = centerPos.X + _x1;
+            var y1 = centerPos.Y + _y1;
+
+            this.currentPos.X = x1;
+            this.currentPos.Y = y1;
+
+            //var angle = radian * (180 / Math.PI);
+
+            this.gfx.RotateAtTransform(angle, this.currentPos);
+            Text.PrtText(this, str, font);
+            this.gfx.RotateAtTransform(-angle, this.currentPos);
+
         }
 
         /// <summary>
