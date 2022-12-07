@@ -1,6 +1,7 @@
 ﻿using PdfSharpCore.Drawing;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Printing.Comon
 {
@@ -66,6 +67,12 @@ namespace Printing.Comon
         public double[,] VtcLW;     // Vertical  Line Width
         public double[] RowHeight;
         public double[] ColWidth;
+        public int[,] RowMerge;     // number of rightside cells to be merged with
+        public int[,] ColMerge;     // number of lowerside cells to be merged with
+        public double[,] LeftCellPadding; // left text margin in the cell
+        public double[,] TopCellPadding; // top text margin in the cell
+        public double[,] RightCellPadding; // right text margin in the cell
+        public double[,] BottomCellPadding; // bottom text margin in the cell
 
         // 印刷に関する設定
         public double LineSpacing3; // 小さい（テーブル内などの）改行高さ pt ポイント
@@ -105,6 +112,12 @@ namespace Printing.Comon
             var oldColWidth = ColWidth != null ? ColWidth.Clone() as double[] : null;
             var oldHolLW = HolLW != null ? HolLW.Clone() as double[,] : null;
             var oldVtcLW = VtcLW != null ? VtcLW.Clone() as double[,] : null;
+            var oldRowMerge = RowMerge?.Clone() as int[,];
+            var oldColMerge = ColMerge?.Clone() as int[,];
+            var oldLeftCellPadding = LeftCellPadding?.Clone() as double[,];
+            var oldTopCellPadding = TopCellPadding?.Clone() as double[,];
+            var oldRightCellPadding = RightCellPadding?.Clone() as double[,];
+            var oldBottomCellPadding = BottomCellPadding?.Clone() as double[,];
 
             CellRows = Math.Min(row, Rows);
             CellCols = Math.Min(col, CellCols);
@@ -151,6 +164,29 @@ namespace Printing.Comon
             for (int j = CellCols; j <= col; ++j)
                 for (int i = 0; i < row; ++i)
                     VtcLW[i, j] = DEFAULT_LINE_WIDTH;
+
+            RowMerge = new int[row, col];
+            ColMerge = new int[row, col];
+            for (int i = 0; i < CellRows; ++i)
+                for (int j = 0; j < CellCols; ++j)
+                {
+                    RowMerge[i, j] = oldRowMerge[i, j];
+                    ColMerge[i, j] = oldColMerge[i, j];
+
+                }
+
+            LeftCellPadding = new double[row, col];
+            TopCellPadding = new double[row, col];
+            RightCellPadding = new double[row, col];
+            BottomCellPadding = new double[row, col];
+            for (int i = 0; i < CellRows; ++i)
+                for (int j = 0; j < CellCols; ++j)
+                {
+                    LeftCellPadding[i, j] = oldLeftCellPadding[i, j];
+                    TopCellPadding[i, j] = oldTopCellPadding[i, j];
+                    RightCellPadding[i, j] = oldRightCellPadding[i, j];
+                    BottomCellPadding[i, j] = oldBottomCellPadding[i, j];
+                }
 
             //** Row, Col Count
             CellRows = row;
@@ -339,7 +375,12 @@ namespace Printing.Comon
             for (int i = 0; i < CellRows; ++i)
             {
                 if (RowHeight[i] == double.NaN || RowHeight[i] <= 0)
-                    RowHeight[i] = LineSpacing3;
+                    for (int j = 0; j < CellCols; ++j)
+                        if (RowMerge[i, j] == 0)
+                        {
+                            var cellHeight = Math.Max(LineSpacing3, TopCellPadding[i, j] + textSize1[i, j].Height + BottomCellPadding[i, j]);
+                            RowHeight[i] = Math.Max(RowHeight[i], cellHeight);
+                        }
             }
 
             ///////////////////////////////////////////////
@@ -347,7 +388,11 @@ namespace Printing.Comon
             {
                 if (ColWidth[j] == double.NaN || ColWidth[j] <= 0)
                     for (int i = 0; i < CellRows; ++i)
-                        ColWidth[j] = Math.Max(ColWidth[j], textSize1[i, j].Width);
+                        if (ColMerge[i, j] == 0)
+                        {
+                            var cellWidth = LeftCellPadding[i, j] + textSize1[i, j].Width + RightCellPadding[i, j];
+                            ColWidth[j] = Math.Max(ColWidth[j], cellWidth);
+                        }
             }
             ///////////////////////////////////////////////
             XPoint[,] point = new XPoint[CellRows + 1, CellCols + 1];
@@ -370,22 +415,33 @@ namespace Printing.Comon
                 }
             }
             catch { Text.PrtText(_mc, "Error: PrintTable() - Base Info"); }
+
+            ///////////////////////////////////////////////
+            for (int i = 0; i < CellRows; ++i)
+                for (int j = 0; j < CellCols; ++j)
+                    for (int ii = 1; ii <= Math.Max(0, RowMerge[i, j]); ++ii)
+                        for (int jj = 1; jj <= Math.Max(0, ColMerge[i, j]); ++jj)
+                        {
+                            RowMerge[i + ii, j + jj] = -ii;
+                            ColMerge[i + ii, j + jj] = -jj;
+                        }
             #endregion
 
             #region Draw Lines
+            var bkup = _mc.xpen.Width;
             try
             {
                 int i, j;
                 try
                 {
-                    for (i = 0; i < CellRows; ++i)
+                    for (i = 0; i < CellRows + 1; ++i)
                         for (j = 0; j < CellCols; ++j)
                             if (HolLW[i, j] != double.NaN)
                                 if (0 < HolLW[i, j])
                                     Shape.DrawLine(_mc, point[i, j], point[i, j + 1], HolLW[i, j]);
 
                     for (i = 0; i < CellRows; ++i)
-                        for (j = 0; j < CellCols; ++j)
+                        for (j = 0; j < CellCols + 1; ++j)
                             if (VtcLW[i, j] != double.NaN)
                                 if (0 < VtcLW[i, j])
                                     Shape.DrawLine(_mc, point[i, j], point[i + 1, j], VtcLW[i, j]);
@@ -396,6 +452,10 @@ namespace Printing.Comon
                 }
             }
             catch { }
+            finally
+            {
+                _mc.xpen.Width = bkup;
+            }
             #endregion
 
             #region Draw String
@@ -411,6 +471,9 @@ namespace Printing.Comon
                         if (Cell[i, j].Length == 0)
                             continue;
 
+                        if (RowMerge[i, j] < 0 || ColMerge[i, j] < 0)
+                            continue;
+
                         double XPos = 0;
                         double YPos = 0;
 
@@ -419,19 +482,19 @@ namespace Printing.Comon
                         switch (AlignY[i, j])
                         {
                             case "T":
-                                YPos = point[i, j].Y;
+                                YPos = point[i, j].Y + TopCellPadding[i, j];
                                 break;
                             case "C":
-                                YPos = (point[i, j].Y + point[i + 1, j].Y) / 2;
+                                YPos = (point[i, j].Y + TopCellPadding[i, j] + point[i + 1 + RowMerge[i, j], j].Y - BottomCellPadding[i, j]) / 2;
                                 break;
                             default:
-                                YPos = point[i + 1, j].Y;
+                                YPos = point[i + 1 + RowMerge[i, j], j].Y - BottomCellPadding[i, j];
                                 break;
                         }
                         switch (AlignX[i, j])
                         {
                             case "L":
-                                XPos = point[i, j].X;
+                                XPos = point[i, j].X + LeftCellPadding[i, j];
                                 switch (AlignY[i, j])
                                 {
                                     case "T":
@@ -446,7 +509,7 @@ namespace Printing.Comon
                                 }
                                 break;
                             case "R":
-                                XPos = point[i, j + 1].X;
+                                XPos = point[i, j + 1 + ColMerge[i, j]].X - RightCellPadding[i, j];
                                 switch (AlignY[i, j])
                                 {
                                     case "T":
@@ -461,7 +524,7 @@ namespace Printing.Comon
                                 }
                                 break;
                             default: // case "C"
-                                XPos = (point[i, j].X + point[i, j + 1].X) / 2;
+                                XPos = (point[i, j].X + LeftCellPadding[i, j] + point[i, j + 1 + ColMerge[i, j]].X - RightCellPadding[i, j]) / 2;
                                 switch (AlignY[i, j])
                                 {
                                     case "T":
@@ -519,6 +582,9 @@ namespace Printing.Comon
         /// <param name="col">列数</param>
         public void ClearDraft()
         {
+            if (RowMerge.Cast<int>().Any(x => x != 0))
+                throw new Exception("not supported to remove rows of the row-merged table.");
+
             // 昔の情報を取っておく
             var oldCell = Cell != null ? Cell.Clone() as string[,] : null;
             var oldAlignX = AlignX != null ? AlignX.Clone() as string[,] : null;
@@ -630,6 +696,9 @@ namespace Printing.Comon
         /// <param name="col">列数</param>
         internal List<Table> SplitTable(int rows, Table myTable)
         {
+            if (RowMerge.Cast<int>().Any(x => x != 0))
+                throw new Exception("not supported to split the row-merged table.");
+
             var _page = new List<Table>();
 
             var tmp1 = Clone();

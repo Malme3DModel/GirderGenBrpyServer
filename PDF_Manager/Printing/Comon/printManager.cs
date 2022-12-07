@@ -47,6 +47,35 @@ namespace Printing.Comon
         public static double LineSpacing4 = printManager.FontSize * 3.0;
 
 
+        /// <summary>
+        /// 節見出し(X. ・・・)の行インデント
+        ///  pt ポイント
+        /// </summary>
+        public static double SectionIndent => 0;
+
+        /// <summary>
+        /// 小節見出し(X.Y ・・・)の行インデント
+        ///  pt ポイント
+        /// </summary>
+        public static double SubsectionIndent => SectionIndent + LineSpacing3;
+
+        /// <summary>
+        /// 小々節見出し(X.Y.Z ・・・)の行インデント
+        ///  pt ポイント
+        /// </summary>
+        public static double SubsubsectionIndent => SubsectionIndent + LineSpacing3;
+
+        /// <summary>
+        /// 本文段落の行インデント
+        ///  pt ポイント
+        /// </summary>
+        public static double ParagraphIndent => SubsubsectionIndent + LineSpacing3;
+
+        /// <summary>
+        /// 本文段落の先頭行の行インデント
+        ///  pt ポイント
+        /// </summary>
+        public static double BeginningOfParagraphIndent => ParagraphIndent + LineSpacing3;
 
     }
 }
